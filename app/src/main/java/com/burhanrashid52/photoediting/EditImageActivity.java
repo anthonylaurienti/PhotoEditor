@@ -428,6 +428,7 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
                 showBottomSheetDialogFragment(mShapeBSFragment);
                 break;
             case TEXT:
+                mPhotoEditor.setBrushDrawingMode(false);
                 TextEditorDialogFragment textEditorDialogFragment = TextEditorDialogFragment.show(this);
                 textEditorDialogFragment.setOnTextEditorListener((inputText, colorCode) -> {
                     final TextStyleBuilder styleBuilder = new TextStyleBuilder();
@@ -438,17 +439,21 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
                 });
                 break;
             case ERASER:
+                mPhotoEditor.setBrushDrawingMode(false);
                 mPhotoEditor.brushEraser();
                 mTxtCurrentTool.setText(R.string.label_eraser_mode);
                 break;
             case FILTER:
+                mPhotoEditor.setBrushDrawingMode(false);
                 mTxtCurrentTool.setText(R.string.label_filter);
                 showFilter(true);
                 break;
             case EMOJI:
+                mPhotoEditor.setBrushDrawingMode(false);
                 showBottomSheetDialogFragment(mEmojiBSFragment);
                 break;
             case STICKER:
+                mPhotoEditor.setBrushDrawingMode(false);
                 showBottomSheetDialogFragment(mStickerBSFragment);
                 break;
         }

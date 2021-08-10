@@ -197,6 +197,14 @@ class PhotoEditorImpl implements PhotoEditor {
     public void setBrushDrawingMode(boolean brushDrawingMode) {
         if (drawingView != null) {
             drawingView.enableDrawing(brushDrawingMode);
+            Log.d(TAG,"set drawing mode!!");
+            if(brushDrawingMode){
+                mBoxHelper.invalidateAllViews();
+                drawingView.bringToFront();
+            }else{
+                mBoxHelper.invalidateAllViews();
+                mBoxHelper.moveToBack(drawingView);
+            }
         }
     }
 

@@ -47,4 +47,20 @@ class BoxHelper {
         if (drawingView != null)
             drawingView.clearAll();
     }
+
+    public void invalidateAllViews() {
+        for (int i = 0; i < mViewState.getAddedViewsCount(); i++) {
+            mViewState.getAddedView(i).invalidate();
+        }
+    }
+
+    public void moveToBack(DrawingView drawingView)
+    {
+        ViewGroup myViewGroup = ((ViewGroup) drawingView.getParent());
+        int index = myViewGroup.indexOfChild(drawingView);
+        for(int i = 0; i<index; i++)
+        {
+            myViewGroup.bringChildToFront(myViewGroup.getChildAt(i));
+        }
+    }
 }
