@@ -88,6 +88,7 @@ class PhotoEditorImpl implements PhotoEditor {
                 return mDetector.onTouchEvent(event);
             }
         });
+        imageView.setTranslationZ(-2);
 
         this.parentView.setClipSourceImage(builder.clipSourceImage);
     }
@@ -98,6 +99,7 @@ class PhotoEditorImpl implements PhotoEditor {
         MultiTouchListener multiTouchListener = getMultiTouchListener(true);
         Sticker sticker = new Sticker(parentView, multiTouchListener, viewState, mGraphicManager);
         sticker.buildView(desiredImage);
+        sticker.getRootView().setTag(2);
         addToEditor(sticker);
     }
 
@@ -120,10 +122,11 @@ class PhotoEditorImpl implements PhotoEditor {
 
     @Override
     public void addText(String text, @Nullable TextStyleBuilder styleBuilder) {
-        drawingView.enableDrawing(false);
+        setBrushDrawingMode(false);
         MultiTouchListener multiTouchListener = getMultiTouchListener(isTextPinchScalable);
         Text textGraphic = new Text(parentView, multiTouchListener, viewState, mDefaultTextTypeface, mGraphicManager);
         textGraphic.buildView(text, styleBuilder);
+        textGraphic.getRootView().setTag(0);
         addToEditor(textGraphic);
     }
 
@@ -162,10 +165,11 @@ class PhotoEditorImpl implements PhotoEditor {
 
     @Override
     public void addEmoji(Typeface emojiTypeface, String emojiName) {
-        drawingView.enableDrawing(false);
+        setBrushDrawingMode(false);
         MultiTouchListener multiTouchListener = getMultiTouchListener(true);
         Emoji emoji = new Emoji(parentView, multiTouchListener, viewState, mGraphicManager, mDefaultEmojiTypeface);
         emoji.buildView(emojiTypeface, emojiName);
+        emoji.getRootView().setTag(1);
         addToEditor(emoji);
     }
 
@@ -199,10 +203,11 @@ class PhotoEditorImpl implements PhotoEditor {
             drawingView.enableDrawing(brushDrawingMode);
             Log.d(TAG,"set drawing mode!!");
             if(brushDrawingMode){
-                mBoxHelper.invalidateAllViews();
+                mBoxHelper.invalidateAllViews(drawingView);
+                drawingView.setTranslationZ(0);
                 drawingView.bringToFront();
             }else{
-                mBoxHelper.invalidateAllViews();
+                mBoxHelper.invalidateAllViews(drawingView);
                 mBoxHelper.moveToBack(drawingView);
             }
         }

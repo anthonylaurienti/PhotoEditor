@@ -1,5 +1,6 @@
 package ja.burhanrashid52.photoeditor;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -48,19 +49,23 @@ class BoxHelper {
             drawingView.clearAll();
     }
 
-    public void invalidateAllViews() {
-        for (int i = 0; i < mViewState.getAddedViewsCount(); i++) {
-            mViewState.getAddedView(i).invalidate();
+    public void invalidateAllViews(View drawingView) {
+        ViewGroup myViewGroup = ((ViewGroup) drawingView.getParent());
+        for (int i = 0; i < myViewGroup.getChildCount(); i++) {
+            myViewGroup.getChildAt(i).invalidate();
         }
     }
 
-    public void moveToBack(DrawingView drawingView)
+    public void moveToBack(View drawingView)
     {
         ViewGroup myViewGroup = ((ViewGroup) drawingView.getParent());
-        int index = myViewGroup.indexOfChild(drawingView);
-        for(int i = 0; i<index; i++)
+        int length = myViewGroup.getChildCount();
+        for(int i = 1; i<length; i++)
         {
-            myViewGroup.bringChildToFront(myViewGroup.getChildAt(i));
+            myViewGroup.getChildAt(i).setTranslationZ(0);
         }
+        invalidateAllViews(drawingView);
+        drawingView.setTranslationZ(-1);
+        drawingView.invalidate();
     }
 }
