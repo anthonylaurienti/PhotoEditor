@@ -80,8 +80,8 @@ class BitmapUtil {
      */
     static Bitmap createBitmapFromGLSurface(GLSurfaceView glSurfaceView, GL10 gl) throws OutOfMemoryError {
         int x = 0, y = 0;
-        int w = glSurfaceView.getWidth();
-        int h = glSurfaceView.getHeight();
+        int w = 2880;//glSurfaceView.getWidth();
+        int h = 2016;//glSurfaceView.getHeight();
         int bitmapBuffer[] = new int[w * h];
         int bitmapSource[] = new int[w * h];
         IntBuffer intBuffer = IntBuffer.wrap(bitmapBuffer);
